@@ -307,11 +307,11 @@ function isCompatible(selectedComponents) {
 
 function selectComponentsBranchAndBound(budget) {
 	let bestCombination = null;
-	let bestPrice = Infinity;
+	let bestPrice = 0;
 
 	function branchAndBound(selectedComponents, remainingCategories, currentPrice) {
 		if (remainingCategories.length === 0) {
-			if (currentPrice <= budget && currentPrice < bestPrice) {
+			if (currentPrice <= budget && budget - currentPrice < budget - bestPrice) {
 				if (isCompatible(selectedComponents)) {
 					bestCombination = { ...selectedComponents };
 					bestPrice = currentPrice;
