@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function selectComponentsBruteforce(budget) {
 	let bestCombination = null;
-	let bestPrice = Infinity;
+	let bestPrice = 0;
 
 	// Dapatkan semua kombinasi komponen
 	const allCombinations = getAllCombinations2([
@@ -533,7 +533,7 @@ function selectComponentsBruteforce(budget) {
 			}, {});
 
 			if (isCompatible(selectedComponents)) {
-				if (totalPrice < bestPrice) {
+				if (budget - totalPrice < budget - bestPrice) {
 					bestPrice = totalPrice;
 					bestCombination = selectedComponents;
 				}
