@@ -342,8 +342,6 @@ function selectComponentsBranchAndBound(budget) {
 	let total = 0;
 
 	if (bestCombination) {
-		document.getElementById('bnb_tdk_oke').classList.add('hidden');
-		document.getElementById('bnb_oke').classList.remove('hidden');
 		console.log('Rekomendasi komponen PC:');
 		for (const [category, component] of Object.entries(bestCombination)) {
 			console.log(`Category: ${category}`);
@@ -412,21 +410,23 @@ function selectComponentsBranchAndBound(budget) {
 
 		return bestCombination;
 	} else {
-		document.getElementById('bnb_oke').classList.add('hidden');
-		document.getElementById('bnb_tdk_oke').classList.remove('hidden');
 		console.log('Tidak ada konfigurasi yang kompatibel ditemukan.');
 		return null;
 	}
 }
 
-function main() {
-	// Contoh penggunaan dengan budget
-	// const budget = 100000000; // Contoh budget
-	const budget = 9999000; // Contoh budget
-
+function main(budget) {
 	const start = performance.now();
 	selectComponentsBranchAndBound(budget);
 	const end = performance.now();
+
+	if (selectComponentsBranchAndBound(budget) == null) {
+		document.getElementById('bnb_oke').classList.add('hidden');
+		document.getElementById('bnb_tdk_oke').classList.remove('hidden');
+	} else {
+		document.getElementById('bnb_tdk_oke').classList.add('hidden');
+		document.getElementById('bnb_oke').classList.remove('hidden');
+	}
 
 	const durationInMilliseconds = end - start;
 	const durationInSeconds = durationInMilliseconds / 1000;
@@ -434,9 +434,6 @@ function main() {
 	console.log(`Waktu durasi BNB: ${durationInSeconds} detik`);
 	document.getElementById('durasi_bnb').textContent = `${durationInSeconds.toString()} detik`;
 }
-
-// main();
-// main2();
 
 document.getElementById('budgetForm').addEventListener('submit', function (event) {
 	event.preventDefault(); // Mencegah form dari pengiriman default
@@ -461,19 +458,33 @@ document.getElementById('budgetForm').addEventListener('submit', function (event
 		} else {
 			alertMessage.textContent = 'Silahkan pilih algoritma yang akan digunakan terlebih dahulu!';
 		}
-		// Tampilkan alert jika kondisi tidak terpenuhi
+		alertElement.classList.remove('hidden');
+	} else if (budget == 'NaN') {
+		alertMessage.textContent = 'Budget tidak boleh Nan ! Silahkan ganti budgetnya !';
+
 		alertElement.classList.remove('hidden');
 	} else {
-		// Tampilkan nilai di console jika semua kondisi terpenuhi
-		console.log('Budget:', budget);
-		console.log('Algorithm:', algorithm.value);
-		main();
-		// main2();
+		alertElement.classList.add('hidden');
+		console.log('Budget', budget);
+		// Hilangkan Koma pada budget
+		var budgetWithoutComma = budget.replace(/,/g, '');
+		if (algorithm.value === 'bnb') {
+			document.getElementById('rekomendasi_bnb').classList.remove('hidden');
+			document.getElementById('rekomendasi_bruteforce').classList.add('hidden');
+			main(budgetWithoutComma);
+		} else if (algorithm.value === 'bruteforce') {
+			document.getElementById('rekomendasi_bnb').classList.add('hidden');
+			document.getElementById('rekomendasi_bruteforce').classList.remove('hidden');
+			main2(budgetWithoutComma);
+		} else if (algorithm.value === 'bnb_bruteforce') {
+			main(budgetWithoutComma);
+			document.getElementById('rekomendasi_bnb').classList.remove('hidden');
+			main2(budgetWithoutComma);
+			document.getElementById('rekomendasi_bruteforce').classList.remove('hidden');
+		}
 		document.getElementById('tampilan').classList.remove('h-screen');
-		document.getElementById('rekomendasi_bnb').classList.remove('hidden');
-		console.log('Value :', value);
-
-		// Lakukan sesuatu dengan nilai budget dan algorithm, misalnya kirim ke server atau tampilkan di halaman
+		document.getElementById('your_budget_bnb').textContent = `Rp. ${budget.toLocaleString()}`;
+		document.getElementById('your_budget_bruteforce').textContent = `Rp. ${budget.toLocaleString()}`;
 	}
 });
 
@@ -530,6 +541,7 @@ function selectComponentsBruteforce(budget) {
 		}
 	}
 
+	let total = 0;
 	if (bestCombination) {
 		console.log('Rekomendasi komponen PC:');
 		for (const [category, component] of Object.entries(bestCombination)) {
@@ -541,10 +553,62 @@ function selectComponentsBruteforce(budget) {
 			console.log('Attributes:');
 			for (const [key, value] of Object.entries(component.attributes)) {
 				console.log(`  ${key}: ${value}`);
+				if (component.attributes.core != null) {
+					document.getElementById(`bruteforce_core_CPU`).textContent = component.attributes.core;
+					document.getElementById(`bruteforce_thread_CPU`).textContent = component.attributes.threads;
+					document.getElementById(`bruteforce_boost_CPU`).textContent = component.attributes.boost_clock;
+					document.getElementById(`bruteforce_soket_CPU`).textContent = component.attributes.soket;
+					document.getElementById(`bruteforce_type_ddr_CPU`).textContent = component.attributes.type_ddr;
+				}
+				if (component.attributes.rating != null) {
+					document.getElementById(`bruteforce_rating_PSU`).textContent = component.attributes.rating;
+					document.getElementById(`bruteforce_daya_PSU`).textContent = component.attributes.daya;
+				}
+				if (component.attributes.size_casing != null) {
+					document.getElementById(`bruteforce_size_Casing`).textContent = component.attributes.size_casing;
+				}
+				if (component.attributes.read != null) {
+					document.getElementById(`bruteforce_read_Storage`).textContent = component.attributes.read;
+					document.getElementById(`bruteforce_write_Storage`).textContent = component.attributes.write;
+					document.getElementById(`bruteforce_size_Storage`).textContent = component.attributes.size;
+					document.getElementById(`bruteforce_type_Storage`).textContent = component.attributes.type;
+				}
+				if (component.attributes.size_ram != null) {
+					document.getElementById(`bruteforce_size_Ram`).textContent = component.attributes.size_ram;
+					document.getElementById(`bruteforce_speed_Ram`).textContent = component.attributes.speed_ram;
+					document.getElementById(`bruteforce_type_Ram`).textContent = component.attributes.type_ddr;
+				}
+				if (component.attributes.size_mobo != null && component.attributes.type_ddr_mobo != null && component.attributes.soket_mobo != null && component.attributes.support_storage != null) {
+					document.getElementById(`bruteforce_size_Motherboard`).textContent = component.attributes.size_mobo;
+					document.getElementById(`bruteforce_type_ddr_Motherboard`).textContent = component.attributes.type_ddr_mobo;
+					document.getElementById(`bruteforce_soket_Motherboard`).textContent = component.attributes.soket_mobo;
+					document.getElementById(`bruteforce_support_storage_Motherboard`).textContent = component.attributes.support_storage;
+				}
+				if (component.attributes.refresh_rate != null && component.attributes.size_monitor != null) {
+					document.getElementById('bruteforce_size_Monitor').textContent = component.attributes.size_monitor;
+					document.getElementById('bruteforce_refresh_rate_Monitor').textContent = component.attributes.refresh_rate;
+				}
+				if (component.attributes.dpi != null) {
+					document.getElementById('bruteforce_dpi_Mouse').textContent = component.attributes.dpi;
+				}
+				if (component.attributes.size_keyboard != null) {
+					document.getElementById('bruteforce_size_Keyboard').textContent = component.attributes.size_keyboard;
+				}
+				if (component.attributes.size_GPU != null) {
+					document.getElementById('bruteforce_size_GPU').textContent = component.attributes.size_GPU;
+				}
 			}
+			total += component.price;
+			document.getElementById(`bruteforce_img_${category}`).src = component.image;
+			document.getElementById(`bruteforce_price_${category}`).textContent = `Rp. ${component.price.toLocaleString()}`;
+			document.getElementById(`bruteforce_name_${category}`).textContent = component.item_name;
+			document.getElementById(`bruteforce_link_${category}`).href = component.link;
 			console.log('----------------------');
 		}
 		console.log(`Sisa budget: ${budget - bestPrice}`);
+		document.getElementById('bruteforce_total').textContent = `Rp. ${total.toLocaleString()}`;
+		document.getElementById('bruteforce_sisa_budget').textContent = `Rp. ${(budget - bestPrice).toLocaleString()}`;
+
 		return bestCombination;
 	} else {
 		console.log('Tidak ada konfigurasi yang kompatibel ditemukan.');
@@ -569,18 +633,27 @@ function getAllCombinations2(arrays) {
 	return combinations;
 }
 
-function main2() {
+function main2(budget) {
 	// Contoh penggunaan dengan budget
-	const budget = 9999000; // Contoh budget
+	// const budget = 9999000; // Contoh budget
 
 	const start = performance.now();
 	selectComponentsBruteforce(budget);
 	const end = performance.now();
 
+	if (selectComponentsBruteforce(budget) == null) {
+		document.getElementById('bruteforce_oke').classList.add('hidden');
+		document.getElementById('bruteforce_tdk_oke').classList.remove('hidden');
+	} else {
+		document.getElementById('bruteforce_tdk_oke').classList.add('hidden');
+		document.getElementById('bruteforce_oke').classList.remove('hidden');
+	}
+
 	const durationInMilliseconds = end - start;
 	const durationInSeconds = durationInMilliseconds / 1000;
 
-	console.log(`Waktu durasi BNB: ${durationInSeconds} detik`);
+	console.log(`Waktu durasi Bruteforce: ${durationInSeconds} detik`);
+	document.getElementById('durasi_bruteforce').textContent = `${durationInSeconds.toString()} detik`;
 }
 
 // Ambil elemen input

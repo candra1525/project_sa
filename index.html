@@ -11,7 +11,7 @@
 			<div class="w-[1024px] mx-auto p-[2rem]">
 				<div class="text-center text-lg md:text-xl lg:text-2xl font-bold mb-6">Perbandingan Efisiensi dan Optimasi pada Algoritma Branch and Bound dan Brute Force dalam Pencarian Komponen PC</div>
 
-				<form id="budgetForm" class="max-w-full mx-auto">
+				<form id="budgetForm" class="max-w-full mx-auto" method="POST">
 					<label for="budget-label" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Budget</label>
 					<div class="relative">
 						<div class="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
@@ -21,12 +21,12 @@
 							type="text"
 							id="budget"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="100,000"
+							placeholder="1,000,000"
 							min="0"
 						/>
 					</div>
 
-					<h3 class="mt-5 mb-2 text-sm font-medium text-gray-900 dark:text-white">Algoritma</h3>
+					<h3 class="mt-5 mb-2 text-sm font-medium text-gray-900 dark:text-white">Algorithm</h3>
 					<ul class="grid w-full gap-6 md:grid-cols-3">
 						<li>
 							<input type="radio" id="bnb" name="algoritma" value="bnb" class="hidden peer" />
@@ -82,33 +82,36 @@
 						</button>
 					</div>
 
-					<div class="flex w-full my-4">
+					<div class="flex w-full my-[2rem]">
 						<button
 							type="submit"
-							class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mx-auto transition-all ease-in-out duration-500 hover:w-[200px]"
+							class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mx-auto transition-all ease-in-out duration-300 w-[100px] hover:w-[200px]"
 						>
-							Periksa
+							Checkout
 						</button>
 					</div>
 				</form>
 
 				<div class="hidden w-[420px] mx-auto md:w-[700px] lg:w-full" id="rekomendasi_bnb">
 					<div class="mt-[2rem] mb-[1rem] w-full text-center">
-						<h2 class="mx-auto text-xl font-bold">Rekomendasi Komponen</h2>
+						<h2 class="mx-auto text-xl font-bold">Rekomendasi Komponen Branch and Bound</h2>
 					</div>
 
 					<div class="relative overflow-x-auto">
-						<p class="my-[2rem]">Durasi pencarian komponen : <span id="durasi_bnb"></span> </p>
+						<div class="my-[2rem] flex justify-between">
+							<p>Durasi pencarian komponen : <span id="durasi_bnb" class="font-bold"></span></p>
+
+							<p>Budget anda : <span id="your_budget_bnb" class="font-bold"></span></p>
+						</div>
 						<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 hidden" id="bnb_oke">
-							
 							<thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
 								<tr>
 									<th scope="col" class="px-6 py-3 rounded-s-lg">Product Image</th>
-									<th scope="col" class="px-6 py-3 ">Product name</th>
+									<th scope="col" class="px-6 py-3">Product name</th>
 									<th scope="col" class="px-6 py-3 rounded-e-lg">Price</th>
 								</tr>
 							</thead>
-							<tbody >
+							<tbody>
 								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 									<td class="px-6 py-4 rounded-s-lg"><img src="" alt="amd" class="w-[75px]" id="img_CPU" /></td>
 
@@ -183,8 +186,8 @@
 											<p class="mr-2"><span id="size_Motherboard"></span> ;</p>
 											<p class="mr-2"><span id="type_ddr_Motherboard"></span> ;</p>
 											<p class="mr-2"><span id="soket_Motherboard"></span> ;</p>
-											<p class="mr-2"><span id="support_storage_Motherboard"></span> ;</p>
-											
+											<p class="mr-2"><span id="support_storage_Motherboard"></span>;</p>
+										</div>
 									</th>
 									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Motherboard">Rp. xxx</td>
 								</tr>
@@ -213,12 +216,11 @@
 								</tr>
 								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Keyboard" /></td>
-									
+
 									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Keyboard"> <span id="name_Keyboard"></span> </a>
 										<div class="core_thread flex">
 											<p class="mr-2"><span id="size_Keyboard"></span>%;</p>
-											
 										</div>
 									</th>
 									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Keyboard">Rp. xxx</td>
@@ -230,7 +232,6 @@
 										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_GPU"> <span id="name_GPU"></span> </a>
 										<div class="core_thread flex">
 											<p class="mr-2"><span id="size_GPU"></span>Gb;</p>
-											
 										</div>
 									</th>
 									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_GPU">Rp. xxx</td>
@@ -250,6 +251,170 @@
 							</tfoot>
 						</table>
 						<p class="text-center hidden" id="bnb_tdk_oke">Tidak ada konfigurasi yang kompatibel ditemukan.</p>
+					</div>
+				</div>
+
+				<!-- BruteForce -->
+				<div class="hidden w-[420px] mx-auto md:w-[700px] lg:w-full" id="rekomendasi_bruteforce">
+					<div class="mt-[2rem] mb-[1rem] w-full text-center">
+						<h2 class="mx-auto text-xl font-bold">Rekomendasi Komponen Bruteforce</h2>
+					</div>
+
+					<div class="relative overflow-x-auto">
+						<div class="my-[2rem] flex justify-between">
+							<p>Durasi pencarian komponen : <span id="durasi_bruteforce" class="font-bold"></span></p>
+
+							<p>Budget anda : <span id="your_budget_bruteforce" class="font-bold"></span></p>
+						</div>
+						<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 hidden" id="bruteforce_oke">
+							<thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+								<tr>
+									<th scope="col" class="px-6 py-3 rounded-s-lg">Product Image</th>
+									<th scope="col" class="px-6 py-3">Product name</th>
+									<th scope="col" class="px-6 py-3 rounded-e-lg">Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="" alt="amd" class="w-[75px]" id="bruteforce_img_CPU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_CPU"> <span id="bruteforce_name_CPU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_core_CPU"></span> Core;</p>
+											<p class="mr-2"><span id="bruteforce_thread_CPU"></span> Thread;</p>
+											<p class="mr-2"><span id="bruteforce_boost_CPU"></span> Ghz;</p>
+											<p class="mr-2"><span id="bruteforce_soket_CPU"></span>;</p>
+											<p class="mr-2"><span id="bruteforce_type_ddr_CPU"></span></p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_CPU"></td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_PSU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_PSU"> <span id="bruteforce_name_PSU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_rating_PSU"></span> ;</p>
+											<p class="mr-2"><span id="bruteforce_daya_PSU"></span> Watt;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_PSU">Rp. xxx</td>
+								</tr>
+
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Casing" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Casing"> <span id="bruteforce_name_Casing"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_Casing"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Casing">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Storage" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Storage"> <span id="bruteforce_name_Storage"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_read_Storage"></span>MB/s;</p>
+											<p class="mr-2"><span id="bruteforce_write_Storage"></span>MB/s;</p>
+											<p class="mr-2"><span id="bruteforce_size_Storage"></span>Gb;</p>
+											<p class="mr-2"><span id="bruteforce_type_Storage"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Storage">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_RAM" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_RAM"> <span id="bruteforce_name_RAM"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_Ram"></span>Gb;</p>
+											<p class="mr-2"><span id="bruteforce_speed_Ram"></span>Mhz;</p>
+											<p class="mr-2"><span id="bruteforce_type_Ram"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_RAM">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Motherboard" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Motherboard"> <span id="bruteforce_name_Motherboard"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="bruteforce_type_ddr_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="bruteforce_soket_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="bruteforce_support_storage_Motherboard"></span> ;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Motherboard">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Monitor" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Monitor"> <span id="bruteforce_name_Monitor"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_Monitor"></span> Inch;</p>
+											<p class="mr-2"><span id="bruteforce_refresh_rate_Monitor"></span> Hz;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Monitor">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Mouse" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Mouse"> <span id="bruteforce_name_Mouse"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_dpi_Mouse"></span>dpi;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Mouse">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_Keyboard" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_Keyboard"> <span id="bruteforce_name_Keyboard"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_Keyboard"></span>%;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_Keyboard">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="bruteforce_img_GPU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="bruteforce_link_GPU"> <span id="bruteforce_name_GPU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="bruteforce_size_GPU"></span>Gb;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="bruteforce_price_GPU">Rp. xxx</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr class="font-semibold text-gray-900 dark:text-white">
+									<th scope="row" class="px-6 py-3 text-base"></th>
+									<td class="px-6 py-3">Total</td>
+									<td class="px-6 py-3" id="bruteforce_total">Rp. xxx</td>
+								</tr>
+								<tr class="font-semibold text-gray-900 dark:text-white">
+									<th scope="row" class="px-6 py-3 text-base"></th>
+									<td class="px-6 py-3">Sisa Budget</td>
+									<td class="px-6 py-3" id="bruteforce_sisa_budget">Rp. xxx</td>
+								</tr>
+							</tfoot>
+						</table>
+						<p class="text-center hidden" id="bruteforce_tdk_oke">Tidak ada konfigurasi yang kompatibel ditemukan.</p>
 					</div>
 				</div>
 			</div>
