@@ -6,30 +6,30 @@
 		<title>Perbandingan Efisiensi dan Optimasi pada Algoritma Branch and Bound dan Brute Force dalam Pencarian Komponen PC</title>
 		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body>
-		<div class="w-full flex items-center">
+	<body class="bg-white dark:bg-black dark:text-white">
+		<div class="w-[500px] mx-auto md:w-[768px] lg:w-full h-screen flex items-center" id="tampilan">
 			<div class="w-[1024px] mx-auto p-[2rem]">
-				<div class="text-center text-2xl font-bold mb-6">Perbandingan Efisiensi dan Optimasi pada Algoritma Branch and Bound dan Brute Force dalam Pencarian Komponen PC</div>
+				<div class="text-center text-lg md:text-xl lg:text-2xl font-bold mb-6">Perbandingan Efisiensi dan Optimasi pada Algoritma Branch and Bound dan Brute Force dalam Pencarian Komponen PC</div>
 
-				<form id="budgetForm" class="max-w-sm mx-auto">
-					<label for="email-address-icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Budget</label>
+				<form id="budgetForm" class="max-w-full mx-auto">
+					<label for="budget-label" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Budget</label>
 					<div class="relative">
 						<div class="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
 							<img src="cash.png" alt="uang" width="24" />
 						</div>
 						<input
-							type="number"
+							type="text"
 							id="budget"
 							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="100000"
+							placeholder="100,000"
 							min="0"
 						/>
 					</div>
 
 					<h3 class="mt-5 mb-2 text-sm font-medium text-gray-900 dark:text-white">Algoritma</h3>
-					<ul class="grid w-full gap-6 md:grid-cols-2">
+					<ul class="grid w-full gap-6 md:grid-cols-3">
 						<li>
-							<input type="radio" id="bnb" name="algoritma" value="bnb" class="hidden peer" required />
+							<input type="radio" id="bnb" name="algoritma" value="bnb" class="hidden peer" />
 							<label
 								for="bnb"
 								class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -50,14 +50,25 @@
 								</div>
 							</label>
 						</li>
+						<li>
+							<input type="radio" id="bnb_bruteforce" name="algoritma" value="bnb_bruteforce" class="hidden peer" />
+							<label
+								for="bnb_bruteforce"
+								class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+							>
+								<div class="flex">
+									<div class="w-full mx">BnB & Bruteforce</div>
+								</div>
+							</label>
+						</li>
 					</ul>
 
-					<div id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-5" role="alert">
+					<div id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-5 hidden" role="alert">
 						<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 							<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
 						</svg>
 						<span class="sr-only">Info</span>
-						<div class="ms-3 text-sm font-medium">A simple info alert with an <a href="#" class="font-semibold underline hover:no-underline">example link</a>. Give it a click if you like.</div>
+						<div class="ms-3 text-sm font-medium" id="alert-message">Silahkan pilih algoritma yang akan digunakan terlebih dahulu!</div>
 						<button
 							type="button"
 							class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
@@ -81,48 +92,165 @@
 					</div>
 				</form>
 
-				<div class="mt-[2rem] mb-[1rem] w-full text-center">
-					<h2 class="mx-auto text-xl font-bold">Rekomendasi Komponen</h2>
-				</div>
+				<div class="hidden w-[420px] mx-auto md:w-[700px] lg:w-full" id="rekomendasi_bnb">
+					<div class="mt-[2rem] mb-[1rem] w-full text-center">
+						<h2 class="mx-auto text-xl font-bold">Rekomendasi Komponen</h2>
+					</div>
 
-				<div class="relative overflow-x-auto">
-					<p class="my-3">Durasi pencarian komponen : 0.01s</p>
-					<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-						<thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-							<tr>
-								<th scope="col" class="px-6 py-3">Product Image</th>
-								<th scope="col" class="px-6 py-3 rounded-s-lg">Product name</th>
-								<th scope="col" class="px-6 py-3 rounded-e-lg">Price</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="bg-white dark:bg-gray-800">
-								<td class="px-6 py-4"><img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR5Gebn50mFL4Dy6h9F_dxapr2U_i_Z1gIQ5dLr1qqZnGZY5YV85AlvfLm5AQgqeqjKKYgATyPEFscsCl4A1jLn1-ayhqyG5qWBa3HTZfbK4Yqq5lwj5QOj&usqp=CAE" alt="amd" class="w-[75px]" /></td>
-								<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-									<a
-										href="https://www.google.com/aclk?sa=l&ai=DChcSEwif0Lmhpq-GAxWrhEsFHejKBdgYABABGgJzZg&ase=2&gclid=EAIaIQobChMIn9C5oaavhgMVq4RLBR3oygXYEAQYASABEgJOL_D_BwE&sig=AOD64_2Y9BIljQ1Yld-EdsCjMYNRkII2hQ&ctype=5&q=&nis=4&ved=0ahUKEwiY5LShpq-GAxWD8zgGHfoaAIsQww8I1Qk&adurl="
-										class="hover:underline hover:font-bold"
-										target="_blank"
-									>
-										AMD RYZEN 9 7950X3D
-									</a>
-									<div class="core_thread flex">
-										<p class="mr-2">16 Core;</p>
-										<p class="mr-2">32 Thread;</p>
-										<p>5.5 Ghz</p>
-									</div>
-								</th>
-								<td class="px-6 py-4 font-bold">Rp. 10.335.000,00</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr class="font-semibold text-gray-900 dark:text-white">
-								<th scope="row" class="px-6 py-3 text-base">Total</th>
-								<td class="px-6 py-3"></td>
-								<td class="px-6 py-3">Rp. 10.335.000,00</td>
-							</tr>
-						</tfoot>
-					</table>
+					<div class="relative overflow-x-auto">
+						<p class="my-[2rem]">Durasi pencarian komponen : <span id="durasi_bnb"></span> </p>
+						<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 hidden" id="bnb_oke">
+							
+							<thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+								<tr>
+									<th scope="col" class="px-6 py-3 rounded-s-lg">Product Image</th>
+									<th scope="col" class="px-6 py-3 ">Product name</th>
+									<th scope="col" class="px-6 py-3 rounded-e-lg">Price</th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="" alt="amd" class="w-[75px]" id="img_CPU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_CPU"> <span id="name_CPU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="core_CPU"></span> Core;</p>
+											<p class="mr-2"><span id="thread_CPU"></span> Thread;</p>
+											<p class="mr-2"><span id="boost_CPU"></span> Ghz;</p>
+											<p class="mr-2"><span id="soket_CPU"></span>;</p>
+											<p class="mr-2"><span id="type_ddr_CPU"></span></p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_CPU"></td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_PSU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_PSU"> <span id="name_PSU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="rating_PSU"></span> ;</p>
+											<p class="mr-2"><span id="daya_PSU"></span> Watt;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_PSU">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Casing" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Casing"> <span id="name_Casing"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_Casing"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Casing">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Storage" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Storage"> <span id="name_Storage"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="read_Storage"></span>MB/s;</p>
+											<p class="mr-2"><span id="write_Storage"></span>MB/s;</p>
+											<p class="mr-2"><span id="size_Storage"></span>Gb;</p>
+											<p class="mr-2"><span id="type_Storage"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Storage">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_RAM" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_RAM"> <span id="name_RAM"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_Ram"></span>Gb;</p>
+											<p class="mr-2"><span id="speed_Ram"></span>Mhz;</p>
+											<p class="mr-2"><span id="type_Ram"></span>;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_RAM">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Motherboard" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Motherboard"> <span id="name_Motherboard"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="type_ddr_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="soket_Motherboard"></span> ;</p>
+											<p class="mr-2"><span id="support_storage_Motherboard"></span> ;</p>
+											
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Motherboard">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Monitor" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Monitor"> <span id="name_Monitor"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_Monitor"></span> Inch;</p>
+											<p class="mr-2"><span id="refresh_rate_Monitor"></span> Hz;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Monitor">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Mouse" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Mouse"> <span id="name_Mouse"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="dpi_Mouse"></span>dpi;</p>
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Mouse">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_Keyboard" /></td>
+									
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_Keyboard"> <span id="name_Keyboard"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_Keyboard"></span>%;</p>
+											
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_Keyboard">Rp. xxx</td>
+								</tr>
+								<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td class="px-6 py-4 rounded-s-lg"><img src="xx" alt="amd" class="w-[75px]" id="img_GPU" /></td>
+
+									<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+										<a href="xx" class="hover:underline hover:font-bold" target="_blank" id="link_GPU"> <span id="name_GPU"></span> </a>
+										<div class="core_thread flex">
+											<p class="mr-2"><span id="size_GPU"></span>Gb;</p>
+											
+										</div>
+									</th>
+									<td class="px-6 py-4 font-bold rounded-e-lg" id="price_GPU">Rp. xxx</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr class="font-semibold text-gray-900 dark:text-white">
+									<th scope="row" class="px-6 py-3 text-base"></th>
+									<td class="px-6 py-3">Total</td>
+									<td class="px-6 py-3" id="total">Rp. xxx</td>
+								</tr>
+								<tr class="font-semibold text-gray-900 dark:text-white">
+									<th scope="row" class="px-6 py-3 text-base"></th>
+									<td class="px-6 py-3">Sisa Budget</td>
+									<td class="px-6 py-3" id="sisa_budget">Rp. xxx</td>
+								</tr>
+							</tfoot>
+						</table>
+						<p class="text-center hidden" id="bnb_tdk_oke">Tidak ada konfigurasi yang kompatibel ditemukan.</p>
+					</div>
 				</div>
 			</div>
 		</div>
